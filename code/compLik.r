@@ -1,8 +1,9 @@
 compLik<-function( hs,c,train,alpha,index_cache){  
-    
-  #save(hs, train, c2,index_cache,file = "mymodel.rda")
+  #c=1:12  
+  #alpha= .9
+  #save(hs, train, ,index_cache,file = "mymodel.rda")
   #load(file = "mymodel.rda")
-  
+  library("matrixStats")
   
   N_s = length(hs[["all_strings"]])
   N_r = length(hs[["hs"]])
@@ -22,12 +23,14 @@ compLik<-function( hs,c,train,alpha,index_cache){
     this_train <- train[c==k]
     cache_inds <- which(c==k)    
     # wypelnij wiarogodnosc danych jesli wykreowane dzieki szumowi przez halas    
-    ll_rule_string[[k]] <- matrix(noise_vals,c(1,sum(c==k)))
+    #ll_rule_string[[k]] <- matrix(noise_vals,c(1,sum(c==k)))
+    ll_rule_string[[k]] <- matrix(replicate(sum(c==k), noise_vals))
+    
     # compute likelihood of the data under each other possible rule
     for (i in 1:length(this_train)){
     poss_rules <-which(hs[["true"]][,index_cache[["train"]][cache_inds[i]]]==TRUE)
     for (r in 1:length(poss_rules)){
-    ll_rule_string[[k]][1,poss_rules[r]] <- logSumExp(c(log_alpha + hs[["log_probs"]][poss_rules[r]], log_notalpha + log(hs[["card"]][poss_rules[r]]/N_s) + hs[["log_probs"]][poss_rules[r]]))
+    ll_rule_string[[k]][poss_rules[r],i] <- logSumExp(c(log_alpha + hs[["log_probs"]][poss_rules[r]], log_notalpha + log(hs[["card"]][poss_rules[r]]/N_s) + hs[["log_probs"]][poss_rules[r]]))
     }   
   }
   # now product over rules
@@ -35,5 +38,6 @@ compLik<-function( hs,c,train,alpha,index_cache){
   #now sum for that cluster over all those that aren't -Inf
   ll_cluster[[k]] = logSumExp(c(ll_rule[[k]][!is.infinite(ll_rule[[k]])]))
  }
+ cat(sum(ll_cluster), cat('\n'))
  return(sum(ll_cluster))
 }

@@ -1,16 +1,18 @@
-source("/home/daniel/Pulpit/RuleLearning/Rcode/functions.R")
-source("/home/daniel/Pulpit/RuleLearning/Rcode/mediate.r")
-source("/home/daniel/Pulpit/RuleLearning/Rcode/preparations.R")
-source("/home/daniel/Pulpit/RuleLearning/Rcode/compLik.r")
+script.dir <- dirname(sys.frame(1)$ofile)
+setwd(script.dir)
+source("code/functions.R")
+source("code/mediate.r")
+source("code/preparations.R")
+source("code/compLik.r")
 
 alpha = .9     # memory noise parameter
 gammaval = 0.2    # parameter for chinese restaurant process
-num_iter = 5 # number of gibbs steps
+num_iter = 2 # number of gibbs steps
 
 hs<-createHypothesisSpace(hs)
 hs<-cacheCardinalities(hs)
 index_cache = cacheItems(hs,train) 
-addNoiseToTraining(hs,train,alpha,index_cache)
+#addNoiseToTraining(hs,train,alpha,index_cache)
 
 ## use gibbs sampler to find cluster assignment
 
@@ -33,18 +35,18 @@ for(i  in  1:num_iter) {
       #try the assignment of this string to every cluster (inc. its own)
       c2 <- vector(mode="list", length=(max(c)+1))
     
-      for (k  in  1:(max(c) +1)){
-           c2[[k]]<-c
-           c2[[k]][j]<-k;
-           ll[k] <- compLik(hs,c2[[k]],train,alpha,index_cache)
-           prior[k] <- computeCRP(c2[[k]],gammaval)
-           new_scores[k] <- (prior[k] + ll[k])
+      for (l  in  1:(max(c) +1)){
+           c2[[l]]<-c
+           c2[[l]][j]<-l;
+           ll[l] <- compLik(hs,c2[[l]],train,alpha,index_cache)
+           prior[l] <- computeCRP(c2[[l]],gammaval)
+           new_scores[l] <- (prior[l] + ll[l])
            }
       
       # gibbs step: jump proportional to the relative probability   
       c[j] <- chooseClass(new_scores)
       c <- cleanUpClasses(c)
-      cat(c, cat('\n'))
+      #cat(c, cat('\n'))
     }
     
   #wizualizacja i inne  takie  
