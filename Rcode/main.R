@@ -4,8 +4,8 @@ source("/home/daniel/Pulpit/RuleLearning/Rcode/preparations.R")
 source("/home/daniel/Pulpit/RuleLearning/Rcode/compLik.r")
 
 alpha = .9     # memory noise parameter
-gammaval = .2    # parameter for chinese restaurant process
-num_iter = 100 # number of gibbs steps
+gammaval = 0.2    # parameter for chinese restaurant process
+num_iter = 5 # number of gibbs steps
 
 hs<-createHypothesisSpace(hs)
 hs<-cacheCardinalities(hs)
@@ -38,13 +38,13 @@ for(i  in  1:num_iter) {
            c2[[k]][j]<-k;
            ll[k] <- compLik(hs,c2[[k]],train,alpha,index_cache)
            prior[k] <- computeCRP(c2[[k]],gammaval)
-           new_scores[k] <- prior[k] + ll[k]
-           new_scores=1:k
+           new_scores[k] <- (prior[k] + ll[k])
            }
       
       # gibbs step: jump proportional to the relative probability   
       c[j] <- chooseClass(new_scores)
       c <- cleanUpClasses(c)
+      cat(c, cat('\n'))
     }
     
   #wizualizacja i inne  takie  

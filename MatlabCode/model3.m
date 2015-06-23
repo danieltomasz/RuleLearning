@@ -74,5 +74,5 @@ for i = 1:params.num_iter
   % now show what happened
   c3(:,i)=sort(c);
   imagesc(c3); drawnow; fprintf('\n');  
-  displayOutputs;
+  %displayOutputs;
 end

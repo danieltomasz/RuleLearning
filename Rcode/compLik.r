@@ -15,7 +15,7 @@ compLik<-function( hs,c,train,alpha,index_cache){
   # wiarogodnosc dla kazdego clustra
   ll_rule_string<- vector(mode="list", length=(max(c)))
   ll_rule<- vector(mode="list", length=(max(c)))
-  ll_cluster<- vector(mode="list", length=(max(c)))
+  ll_cluster<- vector(length=(max(c)))
   
   
   for (k  in  1:max(c)){
@@ -33,7 +33,7 @@ compLik<-function( hs,c,train,alpha,index_cache){
   # now product over rules
   ll_rule[[k]] = colSums(ll_rule_string[[k]],1) + log(1/N_r)
   #now sum for that cluster over all those that aren't -Inf
-  ll_cluster[[k]] = logSumExp (c(ll_rule[[k]][!is.infinite(ll_rule[[k]])]))
+  ll_cluster[[k]] = logSumExp(c(ll_rule[[k]][!is.infinite(ll_rule[[k]])]))
  }
- return(Reduce("+",ll_cluster))
+ return(sum(ll_cluster))
 }
