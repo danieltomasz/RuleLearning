@@ -32,7 +32,7 @@ for (  i  in  1:length(as)) {
   }
 }
 
-addNoiseToTraining <-function( hs,train,alpha,index.cache) {                                                            
+addNoiseToTraining <-function( hs,train,alpha,index_cache) {                                                            
 for (i  in 1:length(train)) {
 if (runif(1) > alpha){
   ind <- sample(1:length(hs[["all_strings"]]), 1) 
@@ -41,6 +41,6 @@ if (runif(1) > alpha){
 }
                         
                                                                  #find(cellfun(@(x) all(train{i} == x),hs.all.strings))
-return(c(train, index.cache))                                                            } #  
+return(c(train, index_cache))                                                            } #  
 } #
 

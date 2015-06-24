@@ -1,10 +1,7 @@
 hs = list(F = list('na','isa','='),train_vocab = 1:6,test_vocab = 1:6)
 train = list(c(1, 1 ,4),c(1, 1 ,5),c(2, 2 ,4),c(2, 2, 6),c(3,3,5),c(3, 3, 6),c(1, 4, 1),c(1, 5, 1),c(2, 4, 2),c(2, 6, 2),c(3, 5, 3),c(3 ,6 ,3))
 
-
-
 createHypothesisSpace <-function(hs){    
-
 # for each place find out what the primitives are
 ps <- vector(mode="list", length=(3))
 h3 <- vector(mode="list", length=(3))
@@ -101,10 +98,9 @@ log_prob<-log(probs_temp)
 hs <- c(list(true=true_of), hs )
 hs <-c(list(log_probs=log_prob),hs)
 hs <- c(list(card=cardinalities), hs )
-save(hs, file="hs.saved")
+#save(hs, file="hs.saved")
 #hs[["true"]] <-true_of
-#),list(cardinalities=card),list(probs=probs_temp))
-save(hs, file = "hs.rda")
+#save(hs, file = "hs.rda")
 return(hs)
 
 }

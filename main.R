@@ -1,4 +1,4 @@
-script.dir <- dirname(sys.frame(1)$ofile)
+#script.dir <- dirname(sys.frame(1)$ofile)
 setwd(script.dir)
 source("code/functions.R")
 source("code/mediate.r")
@@ -7,12 +7,12 @@ source("code/compLik.r")
 
 alpha = .9     # memory noise parameter
 gammaval = 0.2    # parameter for chinese restaurant process
-num_iter = 2 # number of gibbs steps
+num_iter = 100 # number of gibbs steps
 
 hs<-createHypothesisSpace(hs)
 hs<-cacheCardinalities(hs)
 index_cache = cacheItems(hs,train) 
-#addNoiseToTraining(hs,train,alpha,index_cache)
+addNoiseToTraining(hs,train,alpha,index_cache)
 
 ## use gibbs sampler to find cluster assignment
 
