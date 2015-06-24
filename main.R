@@ -1,4 +1,4 @@
-#script.dir <- dirname(sys.frame(1)$ofile)
+script.dir <- dirname(sys.frame(1)$ofile)
 setwd(script.dir)
 source("code/functions.R")
 source("code/mediate.r")
@@ -53,5 +53,6 @@ for(i  in  1:num_iter) {
   cat('\n')
   c3[,i]<-sort(c)
   image(t(c3),col=rainbow(12))
+  displayOutput( c,train,hs,alpha,gammaval,index_cache)
   cat('\n') 
 }
