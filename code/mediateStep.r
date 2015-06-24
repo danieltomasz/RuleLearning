@@ -40,7 +40,9 @@ if (runif(1) > alpha){
   index_cache[["train"]][i] <- ind  
 }
                         
-                                                                 #find(cellfun(@(x) all(train{i} == x),hs.all.strings))
-return(c(train, index_cache))                                                            } #  
+out<- vector(mode="list")
+out[[1]]<-train
+out[[2]]<-index_cache
+return(out)                                                            } #  
 } #
 

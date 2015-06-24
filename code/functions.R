@@ -41,7 +41,7 @@ findMLHypotheses <-function( c,train,hs,alpha,index_cache) {
   log_notalpha = log(1-alpha)
   ll_rule_string<- vector(mode="list", length=(max(c)))
   ll_rule<- vector(mode="list")
-  h<- vector(length=(max(c)))
+  h<- vector(mode="list",length=(max(c)))
   noise_vals = log_notalpha + log(1/(N_s -  hs[["card"]]))
   for (k  in  1:max(c)){
     this_train <- train[c==k]
@@ -65,8 +65,8 @@ findMLHypotheses <-function( c,train,hs,alpha,index_cache) {
   } 
   out = vector()
   wynik<- vector(mode="list")
-  wynik[[1]]<-ll
-  wynik[[2]]<-h
+  wynik[["ll"]]<-ll
+  wynik[["h"]]<-h
   return(wynik)
 } #
 
@@ -75,8 +75,8 @@ displayOutput <-function( c,train,hs,alpha,gammaval,index_cache){
   # find the maximum likelihood hypothesis for each cluster (because this
   # helps you interpret what a cluster means)
   u<-findMLHypotheses(c,train,hs,alpha,index_cache)
-  ll <-u[[1]]
-  mlhs<-u[[2]]
+  ll <-u[["ll"]]
+  mlhs<-u[["h"]]
   pr <- computeCRP(c,gammaval)
   
   for (  i  in  1 : length(mlhs) ) {

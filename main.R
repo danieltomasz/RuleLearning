@@ -1,5 +1,5 @@
-script.dir <- dirname(sys.frame(1)$ofile)
-setwd(script.dir)
+whereAmI <- function() attr(attr(whereAmI, 'srcref'), 'srcfile')$filename
+setwd(dirname(whereAmI()))
 source("code/functions.R")
 source("code/mediateStep.r")
 source("code/preparations.R")
@@ -16,8 +16,9 @@ num_iter = 100 # number of gibbs steps
 hs<-createHypothesisSpace(hs)
 hs<-cacheCardinalities(hs)
 index_cache = cacheItems(hs,train) 
-addNoiseToTraining(hs,train,alpha,index_cache)
-
+out<-addNoiseToTraining(hs,train,alpha,index_cache)
+train<-out[[1]]
+index_cache<-out[[2]]
 ## use gibbs sampler to find cluster assignment
 
 # initialize with every sentence in its own cluster
