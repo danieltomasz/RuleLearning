@@ -1,5 +1,4 @@
 hs = list(F = list('na','isa','='),train_vocab = 1:6,test_vocab = 1:6)
-train = list(c(1, 1 ,4),c(1, 1 ,5),c(2, 2 ,4),c(2, 2, 6),c(3,3,5),c(3, 3, 6),c(1, 4, 1),c(1, 5, 1),c(2, 4, 2),c(2, 6, 2),c(3, 5, 3),c(3 ,6 ,3))
 
 createHypothesisSpace <-function(hs){    
 # for each place find out what the primitives are

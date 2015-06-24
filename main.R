@@ -5,6 +5,10 @@ source("code/mediateStep.r")
 source("code/preparations.R")
 source("code/compLik.r")
 
+
+train = list(c(1, 1 ,4),c(1, 1 ,5),c(2, 2 ,4),c(2, 2, 6),c(3,3,5),c(3, 3, 6),c(1, 4, 1),c(1, 5, 1),c(2, 4, 2),c(2, 6, 2),c(3, 5, 3),c(3 ,6 ,3))
+
+
 alpha = .9     # memory noise parameter
 gammaval = 0.2    # parameter for chinese restaurant process
 num_iter = 100 # number of gibbs steps
